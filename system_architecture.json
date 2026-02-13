@@ -1,0 +1,411 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "projectName": "High-level System Architecture with RAM Entity",
+    "createdAt": "2026-02-13T12:18:14.906Z",
+    "modifiedAt": "2026-02-13T12:18:14.906Z"
+  },
+  "architecture": {
+    "regions": [
+      {
+        "id": "sys_power",
+        "label": "Power Subsystem",
+        "category": "power",
+        "description": "Input source, protection and primary regulation",
+        "layer": "system",
+        "position": {
+          "x": 12,
+          "y": 158.25000000000003
+        },
+        "size": {
+          "width": 806,
+          "height": 161
+        }
+      },
+      {
+        "id": "sys_processing",
+        "label": "Processing Subsystem",
+        "category": "processing",
+        "description": "Main compute domain (application CPU)",
+        "layer": "system",
+        "position": {
+          "x": 1043.5025925925925,
+          "y": 91.30833333333334
+        },
+        "size": {
+          "width": 444,
+          "height": 161
+        }
+      },
+      {
+        "id": "sys_memory",
+        "label": "Memory Subsystem",
+        "category": "processing",
+        "description": "Volatile and non-volatile memory resources",
+        "layer": "system",
+        "position": {
+          "x": 1714.1087037037037,
+          "y": 12
+        },
+        "size": {
+          "width": 409,
+          "height": 302
+        }
+      },
+      {
+        "id": "sys_communication",
+        "label": "Communication Subsystem",
+        "category": "communication",
+        "description": "Network interfaces and external comms",
+        "layer": "system",
+        "position": {
+          "x": 1714.1087037037037,
+          "y": 414
+        },
+        "size": {
+          "width": 368,
+          "height": 161
+        }
+      },
+      {
+        "id": "fw_core",
+        "label": "Firmware Core",
+        "category": "processing",
+        "description": "RTOS and core runtime tasks",
+        "layer": "firmware",
+        "position": {
+          "x": 12,
+          "y": 92
+        },
+        "size": {
+          "width": 465,
+          "height": 161
+        }
+      },
+      {
+        "id": "fw_services",
+        "label": "Firmware Services",
+        "category": "processing",
+        "description": "Drivers, middleware and stacks",
+        "layer": "firmware",
+        "position": {
+          "x": 727,
+          "y": 12
+        },
+        "size": {
+          "width": 1546,
+          "height": 343
+        }
+      }
+    ],
+    "components": [
+      {
+        "id": "sys_battery",
+        "label": "Battery (Li‑Ion)",
+        "category": "battery",
+        "regionId": "sys_power",
+        "description": "Primary energy source for the device",
+        "layer": "system",
+        "position": {
+          "x": 40,
+          "y": 60
+        }
+      },
+      {
+        "id": "sys_regulator",
+        "label": "Power Regulator (3.3V)",
+        "category": "regulator",
+        "regionId": "sys_power",
+        "description": "Primary 3.3V regulator supplying system rails",
+        "layer": "system",
+        "position": {
+          "x": 451,
+          "y": 60
+        }
+      },
+      {
+        "id": "sys_mcu",
+        "label": "Application Processor",
+        "category": "microcontroller",
+        "regionId": "sys_processing",
+        "description": "Handles application logic and peripheral orchestration",
+        "layer": "system",
+        "position": {
+          "x": 40,
+          "y": 60
+        }
+      },
+      {
+        "id": "sys_ram",
+        "label": "ram (entity)",
+        "category": "memory",
+        "regionId": "sys_memory",
+        "description": "Volatile working memory used by the processor",
+        "layer": "system",
+        "position": {
+          "x": 40,
+          "y": 201
+        }
+      },
+      {
+        "id": "sys_flash",
+        "label": "Non-volatile Storage (Flash)",
+        "category": "memory",
+        "regionId": "sys_memory",
+        "description": "Program and persistent data storage",
+        "layer": "system",
+        "position": {
+          "x": 40,
+          "y": 60
+        }
+      },
+      {
+        "id": "sys_wifi",
+        "label": "Wireless Module (WiFi)",
+        "category": "custom",
+        "regionId": "sys_communication",
+        "description": "Network connectivity for cloud and OTA",
+        "layer": "system",
+        "position": {
+          "x": 40,
+          "y": 60
+        }
+      },
+      {
+        "id": "fw_rtos",
+        "label": "RTOS / Scheduler",
+        "category": "custom",
+        "regionId": "fw_core",
+        "description": "Task scheduling, priority management and system services",
+        "layer": "firmware",
+        "position": {
+          "x": 40,
+          "y": 60
+        }
+      },
+      {
+        "id": "fw_device_drivers",
+        "label": "Device Drivers",
+        "category": "custom",
+        "regionId": "fw_services",
+        "description": "Hardware abstraction for peripherals (UART/QSPI/Bus)",
+        "layer": "firmware",
+        "position": {
+          "x": 559,
+          "y": 151
+        }
+      },
+      {
+        "id": "fw_memory_manager",
+        "label": "Memory Manager",
+        "category": "custom",
+        "regionId": "fw_services",
+        "description": "Heap, stack, and DMA buffer allocation; interacts with ram (entity)",
+        "layer": "firmware",
+        "position": {
+          "x": 1082,
+          "y": 60
+        }
+      },
+      {
+        "id": "fw_comm_stack",
+        "label": "Communication Stack",
+        "category": "custom",
+        "regionId": "fw_services",
+        "description": "Network protocols, socket abstraction and OTA agent",
+        "layer": "firmware",
+        "position": {
+          "x": 40,
+          "y": 242
+        }
+      }
+    ],
+    "connections": [
+      {
+        "id": "sys_pwr_bat_to_reg",
+        "from": {
+          "componentId": "sys_battery",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "sys_regulator",
+          "portId": "left"
+        },
+        "category": "power",
+        "label": "VBAT",
+        "routing": "auto"
+      },
+      {
+        "id": "sys_pwr_reg_to_mcu",
+        "from": {
+          "componentId": "sys_regulator",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "sys_mcu",
+          "portId": "left"
+        },
+        "category": "power",
+        "label": "3.3V",
+        "routing": "auto"
+      },
+      {
+        "id": "sys_pwr_reg_to_ram",
+        "from": {
+          "componentId": "sys_regulator",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "sys_ram",
+          "portId": "left"
+        },
+        "category": "power",
+        "label": "3.3V",
+        "routing": "auto"
+      },
+      {
+        "id": "sys_pwr_reg_to_flash",
+        "from": {
+          "componentId": "sys_regulator",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "sys_flash",
+          "portId": "left"
+        },
+        "category": "power",
+        "label": "3.3V",
+        "routing": "auto"
+      },
+      {
+        "id": "sys_pwr_reg_to_wifi",
+        "from": {
+          "componentId": "sys_regulator",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "sys_wifi",
+          "portId": "left"
+        },
+        "category": "power",
+        "label": "3.3V",
+        "routing": "auto"
+      },
+      {
+        "id": "sys_data_mcu_to_ram",
+        "from": {
+          "componentId": "sys_mcu",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "sys_ram",
+          "portId": "left"
+        },
+        "category": "data",
+        "protocol": "custom",
+        "label": "Processor Memory Bus",
+        "routing": "auto"
+      },
+      {
+        "id": "sys_data_mcu_to_flash",
+        "from": {
+          "componentId": "sys_mcu",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "sys_flash",
+          "portId": "left"
+        },
+        "category": "data",
+        "protocol": "QSPI",
+        "label": "QSPI (Code + Data)",
+        "routing": "auto"
+      },
+      {
+        "id": "sys_data_mcu_to_wifi",
+        "from": {
+          "componentId": "sys_mcu",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "sys_wifi",
+          "portId": "left"
+        },
+        "category": "data",
+        "protocol": "UART",
+        "label": "UART/Control",
+        "routing": "auto"
+      },
+      {
+        "id": "fw_rtos_to_device_drivers",
+        "from": {
+          "componentId": "fw_rtos",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "fw_device_drivers",
+          "portId": "left"
+        },
+        "category": "data",
+        "label": "Driver API",
+        "routing": "auto"
+      },
+      {
+        "id": "fw_rtos_to_memory_manager",
+        "from": {
+          "componentId": "fw_rtos",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "fw_memory_manager",
+          "portId": "left"
+        },
+        "category": "data",
+        "label": "Memory Allocation API",
+        "routing": "auto"
+      },
+      {
+        "id": "fw_device_drivers_to_memory_manager",
+        "from": {
+          "componentId": "fw_device_drivers",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "fw_memory_manager",
+          "portId": "left"
+        },
+        "category": "data",
+        "label": "DMA / Buffer Access",
+        "routing": "auto"
+      },
+      {
+        "id": "fw_comm_stack_to_device_drivers",
+        "from": {
+          "componentId": "fw_comm_stack",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "fw_device_drivers",
+          "portId": "left"
+        },
+        "category": "data",
+        "label": "Netif / HAL Bindings",
+        "routing": "auto"
+      },
+      {
+        "id": "fw_rtos_to_comm_stack",
+        "from": {
+          "componentId": "fw_rtos",
+          "portId": "right"
+        },
+        "to": {
+          "componentId": "fw_comm_stack",
+          "portId": "left"
+        },
+        "category": "data",
+        "label": "Task Scheduling / Events",
+        "routing": "auto"
+      }
+    ]
+  }
+}
