@@ -1,0 +1,9 @@
+{
+  "tests": [
+    {"name": "System Initialization", "input": "", "expected_output": "System initialized"},
+    {"name": "Drivers Init", "input": "", "expected_output": "Device drivers initialized"},
+    {"name": "WiFi Connection", "input": "", "expected_output": "WiFi connected"},
+    {"name": "HTTP GET", "input": "", "expected_output": "HTTP GET success"},
+    {"name": "Heartbeat", "input": "", "expected_output": "Heartbeat"}
+  ]
+}
